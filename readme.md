@@ -29,6 +29,20 @@ import numpy as np
 import pygame
 import sys
 ```
+ - En caso de no tenerlas usar:
+   
+  _cv2_
+```
+pip install opencv-python
+```
+_numpy_
+```
+pip install numpy
+```
+_pygame_
+```
+pip install pygame
+```
 ### Variables de entorno
 ```python
 # Configuración de la pantalla
