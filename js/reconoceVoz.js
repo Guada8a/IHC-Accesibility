@@ -15,7 +15,6 @@ recognition.lang = "es-ES"; // Cambia el idioma según tus necesidades
 
 recognition.onstart = function () {
     isRecognizing = true;
-
 };
 
 recognition.onend = function () {
@@ -59,7 +58,6 @@ function saveHistory(command) {
     
 }
 
-
 // Función para manejar los comandos de voz
 function handleVoiceCommand(command) {
     //Array de comandos
@@ -82,6 +80,10 @@ function handleVoiceCommand(command) {
         spanCommands.textContent = "commando no reconocido";
     }
 
+    // Limitar las coordenadas dentro de los límites del canvas
+    objectX = Math.max(0, Math.min(canvas.width - cellWidth, objectX));
+    objectY = Math.max(0, Math.min(canvas.height - cellHeight, objectY))
+
     if (spanCommands.textContent != "commando no reconocido") {
         spanCommands.classList.remove("bg-danger");
         spanCommands.classList.add("bg-success");
@@ -91,6 +93,13 @@ function handleVoiceCommand(command) {
         spanCommands.classList.add("bg-danger");
         return false;
     }
+}
+
+//Comenzar con tensorFlow
+//Cargar modelo
+async function loadModel() {
+    model = await tf.loadLayersModel("modelo/model.json");
+    return model;
 }
 
 function drawGrid() {
@@ -113,9 +122,19 @@ function drawGrid() {
     }
 }
 
+// function drawObject() {
+//     ctx.fillStyle = "blue";
+//     ctx.fillRect(objectX, objectY, cellWidth, cellHeight);
+// }
+
 function drawObject() {
-    ctx.fillStyle = "blue";
-    ctx.fillRect(objectX, objectY, cellWidth, cellHeight);
+    ctx.fillStyle = "#0B3C49";
+    ctx.beginPath();
+    const radius = Math.min(cellWidth, cellHeight) / 2; // Radio del círculo
+    const centerX = objectX + cellWidth / 2; // Coordenada x del centro del círculo
+    const centerY = objectY + cellHeight / 2; // Coordenada y del centro del círculo
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+    ctx.fill();
 }
 
 function gameLoop() {
@@ -125,5 +144,3 @@ function gameLoop() {
 }
 
 gameLoop();
-
-// Comienza camara

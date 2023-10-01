@@ -1,3 +1,13 @@
 canvas {
 	border: 2px solid black;
 }
+#historial{
+    max-height: 200px;
+    overflow-y: auto;
+}
+header.bg-primary{
+    background-color: #280003!important;
+}
+span{
+    font-size: 1em !important;
+}
